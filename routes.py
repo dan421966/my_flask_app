@@ -1,14 +1,17 @@
-from flask import Flask, request, jsonify
-from config import Config
+from flask import jsonify, request
+from sqlalchemy import text
 from models import db, User, JobTitle, SkillCategory, Skill, UserSkill, SkillCategorySkill
+from app import app
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db.init_app(app)
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+@app.route('/test_db_connection', methods=['GET'])
+def test_db_connection():
+    with db.engine.connect() as connection:
+        result = connection.execute(text('SELECT 1'))
+    return jsonify({"message": "Database connection successful", "result": [row[0] for row in result]}), 200
 
 @app.route('/users', methods=['POST'])
 def add_user():
@@ -44,6 +47,3 @@ def get_skill_categories(job_title_id):
 def get_skills(skill_category_id):
     skills = db.session.query(Skill).join(SkillCategorySkill).filter(SkillCategorySkill.skill_category_id == skill_category_id).all()
     return jsonify([{'id': s.id, 'name': s.name} for s in skills])
-
-if __name__ == '__main__':
-    app.run(debug=True)
