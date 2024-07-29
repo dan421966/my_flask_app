@@ -47,3 +47,8 @@ def get_skill_categories(job_title_id):
 def get_skills(skill_category_id):
     skills = db.session.query(Skill).join(SkillCategorySkill).filter(SkillCategorySkill.skill_category_id == skill_category_id).all()
     return jsonify([{'id': s.id, 'name': s.name} for s in skills])
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    return jsonify([{'id': u.id, 'username': u.username, 'email': u.email} for u in users])
