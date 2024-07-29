@@ -1,0 +1,9 @@
+# Python/Flask files
+venv/
+__pycache__/
+*.pyc
+instance/
+.env
+
+# VS Code settings
+.vscode/
