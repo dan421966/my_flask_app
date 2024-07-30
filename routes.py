@@ -100,3 +100,207 @@ def skills_for_desired_role():
     db.session.add(user_skill)
     db.session.commit()
     return jsonify({'message': 'Skill added for desired role successfully'}), 201
+
+
+'''
+### 1. Test Database Connection
+**Description**: Tests the database connection.
+**cURL Command**:
+```sh
+curl -X GET http://127.0.0.1:5000/test_db_connection
+```
+**Expected Output**:
+```json
+{
+    "message": "Database connection successful",
+    "result": [1]
+}
+```
+
+### 2. Get All Users
+**Description**: Retrieves all users from the database.
+**cURL Command**:
+```sh
+curl -X GET http://127.0.0.1:5000/users
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "username": "user1", "email": "user1@example.com"},
+    {"id": 2, "username": "user2", "email": "user2@example.com"}
+]
+```
+**Output Parameters**:
+- `id`: Integer
+- `username`: String
+- `email`: String
+
+### 3. Add a New User
+**Description**: Adds a new user to the database.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/users \
+-H "Content-Type: application/json" \
+-d '{"username": "new_user", "email": "new_user@example.com"}'
+```
+**Expected Output**:
+```json
+{
+    "message": "User created successfully"
+}
+```
+**Input Parameters**:
+- `username`: String
+- `email`: String
+
+### 4. Add a Skill to a User
+**Description**: Adds a skill to a user.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/users/1/skills \
+-H "Content-Type: application/json" \
+-d '{"skill_id": 2, "level": "Intermediate"}'
+```
+**Expected Output**:
+```json
+{
+    "message": "Skill added successfully"
+}
+```
+**Input Parameters**:
+- `skill_id`: Integer
+- `level`: String
+
+### 5. Get All Job Titles
+**Description**: Retrieves all job titles from the database.
+**cURL Command**:
+```sh
+curl -X GET http://127.0.0.1:5000/job_titles
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "name": "Software Engineer"},
+    {"id": 2, "name": "Data Scientist"}
+]
+```
+**Output Parameters**:
+- `id`: Integer
+- `name`: String
+
+### 6. Get Skill Categories by Job Title ID
+**Description**: Retrieves skill categories based on the job title ID.
+**cURL Command**:
+```sh
+curl -X GET http://127.0.0.1:5000/skill_categories/1
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "name": "Programming Languages"},
+    {"id": 2, "name": "Web Development"}
+]
+```
+**Output Parameters**:
+- `id`: Integer
+- `name`: String
+
+### 7. Get Skills by Skill Category ID
+**Description**: Retrieves skills based on the skill category ID.
+**cURL Command**:
+```sh
+curl -X GET http://127.0.0.1:5000/skills/1
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "name": "Python"},
+    {"id": 2, "name": "JavaScript"}
+]
+```
+**Output Parameters**:
+- `id`: Integer
+- `name`: String
+
+### 8. Previous Job Role
+**Description**: Receives the user's previous job role ID and returns related skill categories.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/previous_job_role \
+-H "Content-Type: application/json" \
+-d '{"job_role_id": 1}'
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "name": "Programming Languages"},
+    {"id": 2, "name": "Web Development"}
+]
+```
+**Input Parameters**:
+- `job_role_id`: Integer
+
+**Output Parameters**:
+- `id`: Integer
+- `name`: String
+
+### 9. Skills for Previous Role
+**Description**: Receives the user's previous job role skill details and adds them to the database.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/skills_for_previous_role \
+-H "Content-Type: application/json" \
+-d '{"user_id": 1, "skill_id": 2, "level": "Intermediate"}'
+```
+**Expected Output**:
+```json
+{
+    "message": "Skill added for previous role successfully"
+}
+```
+**Input Parameters**:
+- `user_id`: Integer
+- `skill_id`: Integer
+- `level`: String
+
+### 10. Desired Job Role
+**Description**: Receives the user's desired job role ID and returns related skill categories.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/desired_job_role \
+-H "Content-Type: application/json" \
+-d '{"job_role_id": 1}'
+```
+**Expected Output**:
+```json
+[
+    {"id": 1, "name": "Programming Languages"},
+    {"id": 2, "name": "Web Development"}
+]
+```
+**Input Parameters**:
+- `job_role_id`: Integer
+
+**Output Parameters**:
+- `id`: Integer
+- `name`: String
+
+### 11. Skills for Desired Role
+**Description**: Receives the user's desired job role skill details and adds them to the database.
+**cURL Command**:
+```sh
+curl -X POST http://127.0.0.1:5000/skills_for_desired_role \
+-H "Content-Type: application/json" \
+-d '{"user_id": 1, "skill_id": 2, "level": "Intermediate"}'
+```
+**Expected Output**:
+```json
+{
+    "message": "Skill added for desired role successfully"
+}
+```
+**Input Parameters**:
+- `user_id`: Integer
+- `skill_id`: Integer
+- `level`: String
+'''
